@@ -1,6 +1,6 @@
 # Nuclio Icevision
 
-This repo builds a base image [ghcr.io/greenroom-robotics/nuclio_icevision:latest](https://github.com/Greenroom-Robotics/nuclio_icevision/pkgs/container/nuclio_icevision) which is used to conveniently run icevision Object Detection models in Nuclio / CVAT. It allows you to configure the model `head`, `backbone` and `checkpoint_path` from your nuclio `function.yml`
+This repo builds a base image [ghcr.io/greenroom-robotics/nuclio_icevision:latest](https://github.com/Greenroom-Robotics/nuclio_icevision/pkgs/container/nuclio_icevision) which is used to conveniently run icevision Object Detection models in Nuclio / CVAT. It allows you to configure the model `checkpoint_path` from your nuclio `function.yml`
 
 ## Usage
 
