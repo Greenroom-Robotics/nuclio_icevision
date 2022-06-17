@@ -4,12 +4,12 @@ This repo builds a base image [ghcr.io/greenroom-robotics/nuclio_icevision:lates
 
 ## Usage
 
-* Use [icevision-efficientdet-d0](./example/icevision-efficientdet-d0) as a reference example
-* Modify/create your own as you see fit
+* Use [icevision-from-checkpoint](./example/icevision-from-checkpoint) as a reference example
+* Modify/create your own as you see fit. Note the `checkpoint_path`
 * Deploy it:
 ```bash
 nuctl deploy --project-name cvat \
-  --path example/icevision-efficientdet-d0 \
+  --path example/icevision-from-checkpoint \
   --platform local
 ```
 
@@ -26,13 +26,9 @@ In order to develop you'll want a nuclio instance running on your local machine.
 
 ```bash
 nuctl deploy --project-name cvat \
-  --path example/icevision-efficientdet-d0 \
+  --path example/icevision-from-checkpoint \
   --platform local
 ```
-
-### Num Classes
-
-It is important to note that the num_classes (labels) differs for many pretrained model. If you are getting no detections and you think you should, your num_classes is probably wrong. See [this](https://tech.amikelive.com/node-718/what-object-categories-labels-are-in-coco-dataset/) for how the coco labels changed over time
 
 ### Run tests
 

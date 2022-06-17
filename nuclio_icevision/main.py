@@ -6,7 +6,7 @@ import io
 import numpy as np
 import yaml
 
-from flash.image import ObjectDetector
+from icevision.models import model_from_checkpoint
 from icevision_model_handler import IcevisionModelHandler
 
 
@@ -27,28 +27,11 @@ def init_context(context):
     # Read labels
     with open("/opt/nuclio/function.yaml", "rb") as function_file:
         functionconfig = yaml.safe_load(function_file)
-    annotations = labels_spec = functionconfig["metadata"]["annotations"]
-
-    labels_spec = annotations["spec"]
-    labels = {item["id"]: item["name"] for item in json.loads(labels_spec)}
-
-    print(f"Model head: {annotations['head']}")
-    print(f"Model backbone: {annotations['backbone']}")
-    print(f"Num classes: {len(labels)}")
+    annotations = functionconfig["metadata"]["annotations"]
 
     # Read the DL model
-    # Either "checkpoint_path" or "head" and "backbone" should be specified
-    model = (
-        ObjectDetector.load_from_checkpoint(annotations["checkpoint_path"])
-        if "checkpoint_path" in annotations
-        else ObjectDetector(
-            head=annotations["head"],
-            backbone=annotations["backbone"],
-            num_classes=len(labels),
-            image_size=1024,
-        )
-    )
-    model_handler = IcevisionModelHandler(model=model, image_size=1024, labels=labels)
+    checkpoint_and_model = model_from_checkpoint(annotations["checkpoint_path"])
+    model_handler = IcevisionModelHandler(checkpoint_and_model=checkpoint_and_model)
     context.user_data.model = model_handler
 
     context.logger.info("Init context...100%")

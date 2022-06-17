@@ -1,6 +1,6 @@
 from PIL import Image
-from flash.image import ObjectDetector
 import os
+from icevision.models import model_from_checkpoint
 
 from icevision_model_handler import IcevisionModelHandler
 
@@ -8,14 +8,16 @@ from icevision_model_handler import IcevisionModelHandler
 def test_icevision_model_handler():
     """
     Runs the icevision model handler (bypassing nuclio)
-    Should detect giraffes in the COCO image
+    Should detect milk bottle in the image
     """
-    model = ObjectDetector(head="efficientdet", backbone="d0", num_classes=91, image_size=1024)
-    model_handler = IcevisionModelHandler(model=model, image_size=1024, labels={25: "giraffe"})
-    image = Image.open(os.path.join(os.getcwd(), "./fixtures/giraffe.jpg"))
+    checkpoint_path = "https://github.com/airctic/model_zoo/releases/download/m6/fridge-retinanet-checkpoint-full.pth"
 
-    result = model_handler.infer(image, 0.0)
+    checkpoint_and_model = model_from_checkpoint(checkpoint_path)
+    model_handler = IcevisionModelHandler(checkpoint_and_model=checkpoint_and_model)
+    image = Image.open(os.path.join(os.getcwd(), "./fixtures/milk.jpg"))
 
-    assert len(result) == 2
-    assert result[0]["label"] == "giraffe"
-    assert result[1]["label"] == "giraffe"
+    result = model_handler.infer(image, 0.8)
+
+    assert len(result) == 1
+    assert result[0]["label"] == "milk_bottle"
+    assert result[0]["points"] == (240, 190, 356, 494)

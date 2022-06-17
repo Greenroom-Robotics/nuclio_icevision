@@ -11,6 +11,8 @@ RUN apt-get update
 RUN apt install -y python3-pip wget curl git python3-tk libglib2.0-0
 RUN apt-get install -y python-is-python3
 
+RUN pip install pytest
+
 # Install icevision
 RUN wget https://raw.githubusercontent.com/airctic/icevision/master/icevision_install.sh
 RUN bash icevision_install.sh cuda11

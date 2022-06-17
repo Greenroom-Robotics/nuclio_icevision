@@ -8,9 +8,7 @@ metadata:
     name: IceVision - EfficientDet d0
     type: detector
     framework: pytorch
-    head: efficientdet # any icevision head
-    backbone: d0       # any icevision backbone
-    # checkpoint_path: # path to a model checkpoint
+    checkpoint_path: https://github.com/airctic/model_zoo/releases/download/m6/fridge-retinanet-checkpoint-full.pth
     spec: |
       [
         { "id": 1, "name": "person" },
