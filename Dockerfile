@@ -21,6 +21,9 @@ COPY ./nuclio_icevision /opt/nuclio
 
 WORKDIR /opt/nuclio
 
+# Run main.py, this will trigger icevision to download fonts and configs
+RUN python ./main.py
+
 # Run the tests
 # Nuclio will overwrite this CMD when it is deployed
 CMD pytest . -vv
