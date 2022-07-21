@@ -15,7 +15,7 @@ RUN pip install pytest
 
 # Install icevision
 RUN wget https://raw.githubusercontent.com/airctic/icevision/master/icevision_install.sh
-RUN bash icevision_install.sh cuda11
+RUN bash icevision_install.sh cuda11 master
 
 COPY ./nuclio_icevision /opt/nuclio
 
